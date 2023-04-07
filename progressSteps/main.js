@@ -1,0 +1,55 @@
+const progress = document.querySelector("#progress");
+const circles = document.querySelectorAll(".circle");
+const prev = document.querySelector("#prev");
+const next = document.querySelector("#next");
+
+
+let currenActive = 1;
+
+next.addEventListener("click",()=>{
+    currenActive++;
+    if(currenActive > circles.length){
+        currenActive = circles.length;
+    }
+    update();
+});
+
+
+
+prev.addEventListener("click",()=>{
+    currenActive--;
+
+    if(currenActive < 1){
+        currenActive = 1;
+    }
+    update();
+
+});
+
+
+function update() {
+    circles.forEach((circle,index)=>{
+        if(index < currenActive){
+            circle.classList.add("active");
+        }else{
+            circle.classList.remove("active")
+        }
+    })
+    const actives = document.querySelectorAll(".active");
+   // console.log(actives.length, circles.length);
+   // console.log(((actives.length -1) / (circles.length -1)) * 100 + "%");
+
+   progress.style.width = (actives.length -1) / (circles.length -1) * 100 + "%";
+
+    if(currenActive === 1){
+        prev.disabled = true;
+    }else if(currenActive === circles.length){
+        next.disabled = true;
+
+    }else{
+        prev.disabled =false;
+        next.disabled = false;
+
+    }
+
+}
